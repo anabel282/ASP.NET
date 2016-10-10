@@ -7,10 +7,10 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace EjemploWebForm {
+namespace WebApplication1 {
     
     
-    public partial class index {
+    public partial class Autor {
         
         /// <summary>
         /// Control form1.
@@ -40,49 +40,49 @@ namespace EjemploWebForm {
         protected global::System.Web.UI.WebControls.Menu Menu1;
         
         /// <summary>
-        /// Control btncrearUsuario.
+        /// Control btnCrearAutor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btncrearUsuario;
+        protected global::System.Web.UI.WebControls.Button btnCrearAutor;
         
         /// <summary>
-        /// Control grdv_Usuarios.
+        /// Control grdv_autores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdv_Usuarios;
+        protected global::System.Web.UI.WebControls.GridView grdv_autores;
         
         /// <summary>
-        /// Control lblIdUsuario.
+        /// Control lblIdAutor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIdUsuario;
+        protected global::System.Web.UI.WebControls.Label lblIdAutor;
         
         /// <summary>
-        /// Control txtNombreUsuario.
+        /// Control txtNombreAutor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreUsuario;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreAutor;
         
         /// <summary>
-        /// Control btnGuardarUsuario.
+        /// Control btnGuardarAutor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardarUsuario;
+        protected global::System.Web.UI.WebControls.Button btnGuardarAutor;
         
         /// <summary>
         /// Control lblMensaje.
@@ -94,21 +94,21 @@ namespace EjemploWebForm {
         protected global::System.Web.UI.WebControls.Label lblMensaje;
         
         /// <summary>
-        /// Control txtIdUsuario.
+        /// Control txtIdAutor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdUsuario;
+        protected global::System.Web.UI.WebControls.TextBox txtIdAutor;
         
         /// <summary>
-        /// Control btnDelete.
+        /// Control btnBorrar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.WebControls.Button btnBorrar;
     }
 }

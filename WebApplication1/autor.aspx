@@ -1,81 +1,78 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="EjemploWebForm.index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="autor.aspx.cs" Inherits="WebApplication1.Autor" %>
 
 <!DOCTYPE html>
-<html lang="es-es">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
     <script src="http://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 </head>
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server" ID="ScriptManager" />
         <div>
-            <asp:Menu ID="Menu1" runat="server" OnMenuItemClick="Menu1_MenuItemClick">
+            <asp:Menu ID="Menu1" runat="server">
                 <Items>
                     <asp:MenuItem NavigateUrl="~/index.aspx" Text="Pagina principal" Value="Pagina principal"></asp:MenuItem>
                 </Items>
             </asp:Menu>
-
             <asp:UpdatePanel runat="server">
                 <ContentTemplate>
-                    <asp:Button ID="btncrearUsuario" runat="server" Text="Crear Usuario" OnClick="btncrearUsuario_Click" />
-                    <asp:GridView DataKeyNames="codUsuario" OnRowCommand="grdv_Usuarios_RowCommand" ID="grdv_Usuarios" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False">
+                    <asp:Button runat="server" Text="Crear Autor" ID="btnCrearAutor" OnClick="btnCrearAutor_Click" />
+                    <asp:GridView ID="grdv_autores" DataKeyNames="codAutor" OnRowCommand="grdv_autores_RowCommand" AllowPaging="true" AllowSorting="true" AutoGenerateColumns="false" runat="server">
                         <Columns>
-                            <asp:ButtonField CommandName="editUsuario" Text="Editar" ControlStyle-CssClass="btn btn-info">
+                            <asp:BoundField DataField="nombre" HeaderText="Nombre" Visible="true" />
+                            <asp:BoundField DataField="codAutor" HeaderText="codAutor" Visible="false" />
+                            <asp:ButtonField CommandName="editarAutor" Text="Editar" ControlStyle-CssClass="btn btn-info">
                                 <ControlStyle CssClass="btn btn-info" />
                             </asp:ButtonField>
-                            <asp:ButtonField CommandName="deleteUsuario" Text="Borrar" ControlStyle-CssClass="btn btn-danger">
+                            <asp:ButtonField CommandName="borrarAutor" Text="Borrar" ControlStyle-CssClass="btn btn-danger">
                                 <ControlStyle CssClass="btn btn-danger" />
                             </asp:ButtonField>
-                            <asp:BoundField DataField="codUsuario" Visible="False" />
-                            <asp:BoundField DataField="nombre" HeaderText="Nombre" Visible="true" />
                         </Columns>
                     </asp:GridView>
                 </ContentTemplate>
             </asp:UpdatePanel>
-            <!--Ventana modal, ventana emergente con diferentes opciones, cada una realiza una accion(metodo)-->
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="exampleModalLabel">Formulario</h4>
+                            <h4 class="modal-title" id="editModalLabel">Formulario</h4>
                         </div>
                         <div class="modal-body">
-                            <asp:Label runat="server" ID="lblIdUsuario" Visible="true" Text="">Nombre:</asp:Label>
-                            <asp:TextBox ID="txtNombreUsuario" runat="server" Text=""></asp:TextBox>
+                            <asp:Label runat="server" ID="lblIdAutor" Visible="true" Text="">Nombre:</asp:Label>
+                            <asp:TextBox runat="server" ID="txtNombreAutor" Text=""></asp:TextBox>
                         </div>
                         <div class="modal-footer">
+                            <asp:Button runat="server" ID="btnGuardarAutor" OnClick="btnGuardarAutor_Click" CssClass="btn btn-success" Text="Guardar" />
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <asp:Button runat="server" OnClick="btnGuardarUsuario_Click" ID="btnGuardarUsuario" Text="Guardar" />
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="borrarModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id=""></h4>
+                            <h4 class="modal-title" id="borrarModalLabel">Borrar</h4>
                         </div>
                         <div class="modal-body">
-                            <asp:Label ID="lblMensaje" runat="server" Text="¿Esta usted seguro que desea borrar?"></asp:Label>
-
-                            <asp:TextBox ID="txtIdUsuario" runat="server" Enabled="false" Visible="false"></asp:TextBox>
+                            <asp:Label runat="server" ID="lblMensaje" Text="¿Esta seguro de que desea borrarlo?"></asp:Label>
+                            <asp:TextBox runat="server" ID="txtIdAutor" Enabled="false" Visible="false"></asp:TextBox>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <asp:Button ID="btnDelete" runat="server" OnClick="btnDelete_Click" Text="Borrar" />
+                            <asp:Button runat="server" ID="btnBorrar" OnClick="btnBorrar_Click" Text="Borrar" />
                         </div>
                     </div>
                 </div>

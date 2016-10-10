@@ -8,25 +8,21 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace WebApplication1
+namespace EjemploWebForm
 {
     public partial class index : System.Web.UI.Page
     {
         DataTable dt;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            cargarDatos();
+            cargaDatos();
         }
 
-        private void cargarDatos()
+        private void cargaDatos()
         {
             try
             {
-                /*
-                 *Estamos referenciado las etiquetas del web.config, el configuracionManager --> etiqueta configuration, connectionStrings --> etiqueta connectionString  
-                 */
-                string cadenaConexion = ConfigurationManager.ConnectionStrings[""].ConnectionString;
+                string cadenaConexion = ConfigurationManager.ConnectionStrings["GESTLIBRERIAConnectionString"].ConnectionString;
                 string SQL = "SELECT * FROM usuario";
                 SqlConnection conn = new SqlConnection(cadenaConexion);
                 conn.Open();
@@ -35,29 +31,140 @@ namespace WebApplication1
                 dAdapter.Fill(ds);
                 dt = ds.Tables[0];
 
-                grdUsuarios.DataSource = dt;
-                grdUsuarios.DataBind();
+                grdv_Usuarios.DataSource = dt;
+                grdv_Usuarios.DataBind();
                 conn.Close();
             }
             catch (SqlException ex)
             {
-                System.Console.Error.Write(ex.Message);
+                Console.Error.Write(ex.Message);
             }
         }
 
-        protected void grdUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void grdv_Usuarios_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            string commandName = e.CommandName;
-            //int codUsuario
-            switch (commandName)
+            string comand = e.CommandName;
+            int index = Convert.ToInt32(e.CommandArgument);
+            string codigo = grdv_Usuarios.DataKeys[index].Value.ToString();
+
+            switch (comand)
             {
                 case "editUsuario":
-                    //Hemos pulsado el boton de editar;
+                    {
+                        lblIdUsuario.Text = codigo;
+                        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                        sb.Append(@"<script>");
+                        sb.Append("$('#editModal').modal('show')");
+                        sb.Append(@"</script>");
+
+
+                    }
                     break;
-                case "borrarUsuario":
-                    //Hemos pulsado el boton borrar;
+
+                case "deleteUsuario":
+                    {
+
+                        txtIdUsuario.Text = codigo;
+                        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                        sb.Append(@"<script>");
+                        sb.Append("$('#deleteConfirm').modal('show')");
+                        sb.Append(@"</script>");
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "ConfirmarBorrado", sb.ToString(), false);
+                    }
                     break;
+
             }
+        }
+
+        protected void btnGuardarUsuario_Click(object sender, EventArgs e)
+        {
+            string codigo = lblIdUsuario.Text;
+            string nombre = txtNombreUsuario.Text;
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["GESTLIBRERIAConnectionString"].ConnectionString;
+            int cod;
+
+            string SQL = "INSERT INTO usuario(nombre) VALUES(" + nombre + ")";
+            if (Int32.TryParse(codigo, out cod) && cod > -1)
+            {
+                SQL = "UPDATE usuario SET nombre = '" + nombre + "' WHERE codUsuario =" + codigo;
+            }
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = new SqlConnection(cadenaConexion);
+                conn.Open();
+                SqlCommand sqlcmm = new SqlCommand();
+                sqlcmm.Connection = conn;
+                sqlcmm.CommandText = SQL;
+                sqlcmm.CommandType = CommandType.Text;
+                // sqlcmm.CommandType = CommandType.StoredProcedure;
+                sqlcmm.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            cargaDatos();
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append(@"<script>");
+            sb.Append("$('#editModal').modal('hide')");
+            sb.Append(@"</script>");
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "OcultarCreate", sb.ToString(), false);
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["GESTLIBRERIAConnectionString"].ConnectionString;
+
+            string codigo = txtIdUsuario.Text;
+            string SQL = "DELETE FROM usuario WHERE codUsuario=" + codigo;
+            try
+            {
+                conn = new SqlConnection(cadenaConexion);
+                conn.Open();
+                SqlCommand sqlcmm = new SqlCommand();
+                sqlcmm.Connection = conn;
+                sqlcmm.CommandText = SQL;
+                sqlcmm.CommandType = CommandType.Text;
+                // sqlcmm.CommandType = CommandType.StoredProcedure;
+                sqlcmm.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            cargaDatos();
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append(@"<script>");
+            sb.Append("$('#deleteConfirm').modal('hide')");
+            sb.Append(@"</script>");
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "OcultarCreate", sb.ToString(), false);
+        }
+
+        protected void btncrearUsuario_Click(object sender, EventArgs e)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            lblIdUsuario.Text = "-1";
+            txtNombreUsuario.Text = "";
+            sb.Append(@"<script>");
+            sb.Append("$('#editModal').modal('show')");
+            sb.Append(@"</script>");
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "MostrarCreate", sb.ToString(), false);
+        }
+
+        protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
+        {
+
         }
     }
 }
