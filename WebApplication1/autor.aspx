@@ -30,7 +30,7 @@
                     <asp:GridView ID="grdv_autores" DataKeyNames="codAutor" OnRowCommand="grdv_autores_RowCommand" AllowPaging="true" AllowSorting="true" AutoGenerateColumns="false" runat="server">
                         <Columns>
                             <asp:BoundField DataField="nombre" HeaderText="Nombre" Visible="true" />
-                            <asp:BoundField DataField="codAutor" HeaderText="codAutor" Visible="false" />
+                            <asp:BoundField DataField="codAutor" HeaderText="codigo Autor" Visible="false" />
                             <asp:ButtonField CommandName="editarAutor" Text="Editar" ControlStyle-CssClass="btn btn-info">
                                 <ControlStyle CssClass="btn btn-info" />
                             </asp:ButtonField>
@@ -49,7 +49,8 @@
                             <h4 class="modal-title" id="editModalLabel">Formulario</h4>
                         </div>
                         <div class="modal-body">
-                            <asp:Label runat="server" ID="lblIdAutor" Visible="true" Text="">Nombre:</asp:Label>
+                            <asp:Label runat="server" ID="lblIdAutor" Visible="false" Text=""/>
+                            Nombre:
                             <asp:TextBox runat="server" ID="txtNombreAutor" Text=""></asp:TextBox>
                         </div>
                         <div class="modal-footer">
@@ -67,7 +68,8 @@
                             <h4 class="modal-title" id="borrarModalLabel">Borrar</h4>
                         </div>
                         <div class="modal-body">
-                            <asp:Label runat="server" ID="lblMensaje" Text="¿Esta seguro de que desea borrarlo?"></asp:Label>
+                            <asp:Label runat="server" ID="lblMensaje" Text="¿Esta seguro de que desea borrarlo?" Visible="true"></asp:Label>
+                            UUUUUUUUUUUUUUUUUUUUU
                             <asp:TextBox runat="server" ID="txtIdAutor" Enabled="false" Visible="false"></asp:TextBox>
                         </div>
                         <div class="modal-footer">

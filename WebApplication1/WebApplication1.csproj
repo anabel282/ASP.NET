@@ -121,6 +121,7 @@
     <Compile Include="autor.aspx.designer.cs">
       <DependentUpon>autor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\UsuarioRespositoryImp.cs" />
     <Compile Include="DAL\UsuarioRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

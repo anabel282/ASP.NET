@@ -59,12 +59,12 @@ namespace WebApplication1
                         sb.Append(@"<script>");
                         sb.Append("$('#editModal').modal('show')");
                         sb.Append(@"</script>");
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "MostrarCreate", sb.ToString(), false);
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "MostrarEditar", sb.ToString(), false);
                     }
                     break;
                 case "borrarAutor":
                     {
-                        txtIdAutor.Text = codAutor;
+                        lblIdAutor.Text = codAutor;
                         System.Text.StringBuilder sb = new System.Text.StringBuilder();
                         sb.Append(@"<script>");
                         sb.Append("$('#borrarModal').modal('show')");
@@ -91,11 +91,11 @@ namespace WebApplication1
             string codigo = lblIdAutor.Text;
             string nombre = txtNombreAutor.Text;
             int cod;
-            string SQL = "INSERT INTO autor (nombre) VALUES (" + nombre + ")";
+            string SQL = "INSERT INTO autor (nombre, borrado) VALUES ('" + nombre + "', 0)";
 
             if (Int32.TryParse(codigo, out cod) && cod > -1)
             {
-                SQL = "UPDATE autor SET nombre=" + nombre + "WHERE codAutor=" + cod;
+                SQL = "UPDATE autor SET nombre=" + nombre + " borrado=0 WHERE codAutor=" + cod;
             }
 
             string cadenaConexion = ConfigurationManager.ConnectionStrings["GESTLIBRERIAConnectionString"].ConnectionString;
@@ -162,7 +162,7 @@ namespace WebApplication1
             sb.Append(@"<script>");
             sb.Append("$(#'borrarModal').modal('hide')");
             sb.Append(@"</script>");
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "OcultarCreate", sb.ToString(), false);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "borrar", sb.ToString(), false);
         }
     }
 }
